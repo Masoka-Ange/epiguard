@@ -110,11 +110,11 @@
 <div class="hopital-container">
     {% for hopital in hopitaux %}
     <div class="hopital-card">
-        {% if hopital.photo %}
+        <!-- {% if hopital.photo %}
             <img src="{{ hopital.photo.url }}" alt="Image de {{ hopital.name }}">
         {% else %}
             <img src="/path/to/default/image.jpg" alt="Image par défaut">
-        {% endif %}
+        {% endif %} -->
         <h3>{{ hopital.name }}</h3>
         <p><strong>Adresse:</strong> {{ hopital.address }}</p>
         <p><strong>Contact d'urgence:</strong> {{ hopital.emergency_contact }}</p>

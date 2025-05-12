@@ -154,7 +154,7 @@
                     <th>Adresse</th>
                     <th>Contact d'urgence</th>
                     <th>Province</th>
-                    <th>Photo</th>
+        
                 </tr>
             </thead>
             <tbody>
@@ -166,9 +166,9 @@
                     <td>{{ hopital.emergency_contact }}</td>
                     <td>{{ hopital.province.name }}</td>
                     <td>
-                        {% if hopital.photo %}
+                        <!-- {% if hopital.photo %}
                             <img src="{{ hopital.photo.url }}" alt="{{ hopital.name }}" style="width: 100px; height: auto;">
-                        {% else %}
+                        {% else %} -->
                             <span>Aucune photo</span>
                         {% endif %}
                     </td>
