@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}À propos | EpiGuard{% endblock %}
+
+{% block content %}
+<style>
+    /* Section styling */
+    .about-section {
+        background: linear-gradient(to bottom, #f0f8ff, #dcdcdc);
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+
+    .about-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    .about-section p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #34495e;
+        max-width: 800px;
+        margin: 0 auto;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    .about-section .mission {
+        font-weight: bold;
+        color: #e74c3c;
+    }
+
+    .about-section .features {
+        font-size: 1rem;
+        color: #2ecc71;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    /* Animation effects */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Button styling */
+    .learn-more-btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: #fff;
+        padding: 15px 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .learn-more-btn:hover {
+        background-color: #2980b9;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Profile card styling */
+    .team-section {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .team-member {
+        text-align: center;
+        max-width: 200px;
+    }
+
+    .team-member img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #3498db;
+        margin-bottom: 1rem;
+    }
+
+    .team-member h4 {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .team-member p {
+        color: #34495e;
+    }
+
+    /* About us section */
+    .about-info {
+        background-color: #ecf0f1;
+        padding: 2rem 1rem;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 8px;
+    }
+
+    .about-info h2 {
+        font-size: 2rem;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-info p {
+        font-size: 1.2rem;
+        color: #34495e;
+        line-height: 1.8;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .about-section h1 {
+            font-size: 2rem;
+        }
+
+        .about-section p {
+            font-size: 1rem;
+        }
+
+        .learn-more-btn {
+            font-size: 0.9rem;
+            padding: 10px 20px;
+        }
+
+        .team-section {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<section class="about-section">
+    <h1>À propos de EpiGuard</h1>
+    <p>
+        Bienvenue sur <span class="mission">EpiGuard</span>, un logiciel innovant conçu pour analyser rapidement et efficacement l'état de santé des patients en matière de Monkeypox. 
+        Notre application vous informe en toute simplicité si vous êtes atteint ou non du Monkeypox, vous offrant une transparence totale et un diagnostic basé sur des données fiables.
+    </p>
+    <p>
+        Grâce à des données collectées dans chaque province, <span class="mission">EpiGuard</span> est également capable de prédire l'évolution de l'épidémie. 
+        Nos algorithmes avancés permettent d'anticiper si la situation va s'aggraver ou être maîtrisée, en aidant les autorités sanitaires à prendre les bonnes décisions.
+    </p>
+    <p class="features">
+        Fonctionnalités principales : Détection rapide, analyse prédictive, suivi géographique de l'épidémie, et bien plus encore.
+    </p>
+
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="team-member">
+        <img src="{% static 'css/pdg.jpeg' %}" alt="Membre de l'équipe">
+        <h4>Nom du Membre</h4>
+        <p>PDG de PoxCare, avec une vision forte sur la santé publique et la technologie.</p>
+    </div>
+    <div class="team-member">
+        <img src="{% static 'css/info.jpeg' %}" alt="Membre de l'équipe">
+        <h4>Nom du Membre</h4>
+        <p>Chef de la recherche, spécialisé en santé publique et épidémiologie.</p>
+    </div>
+    <div class="team-member">
+        <img src="{% static 'css/pdg.jpg' %}" alt="Membre de l'équipe">
+        <h4>Nom du Membre</h4>
+        <p>Directeur technique, en charge du développement et des algorithmes prédictifs.</p>
+    </div>
+    <div class="team-member">
+        <img src="{% static 'css/pdg.jpg' %}" alt="Membre de l'équipe">
+        <h4>Nom du Membre</h4>
+        <p>Responsable des partenariats stratégiques et de la communication.</p>
+    </div>
+</section>
+
+<!-- About Us Info -->
+<section class="about-info">
+    <h2>À propos de nous</h2>
+    <p><strong>Historique de CEMCC</strong><br>
+        Le Collège d’Etudiants et Médecins Chrétiens Chercheurs (CEMCC asbl) a été fondé en janvier 2023 par un groupe d'étudiants en médecine : KAMBALE KEUKEU Richard, SAKINA EPILI Bénédicte, GAHUNGU Julienne Ruth, Bénédict MANZEKELE TSAMANI, NDONDO ENGOELA Naomi, Elisabeth MUHAMBYA KAVIRA, et ASSUMANI CUMA Jean-Chrétien. Ils sont soucieux des lacunes en matière de connaissances médicales en RDC et cherchent des solutions pour améliorer la formation des futurs professionnels de la santé.</p>
+    <p><strong>Mission</strong><br>
+        La mission du CEMCC asbl est de promouvoir la recherche et l’innovation médicale parmi les étudiants et jeunes médecins en RDC, en visant un développement significatif du domaine de la santé. Nous nous concentrons sur la recherche et l'innovation pour pallier les insuffisances rencontrées dans la formation médicale.</p>
+    <p><strong>Problématique</strong><br>
+        La préparation de la jeunesse en médecine est essentielle pour répondre aux attentes sociétales en matière de santé. Face aux défis du système de santé en RDC, CEMCC s'engage à promouvoir la recherche scientifique et l’innovation médicale pour améliorer la situation.</p>
+    <p><strong>Résultats Attendus</strong><br>
+        Le CEMCC asbl vise à intégrer tous les étudiants et jeunes médecins dans la recherche scientifique, clé du développement. En atteignant ces objectifs, ils deviendront des atouts majeurs pour la santé publique en RDC et dans le monde.</p>
+</section>
+
+{% endblock %}

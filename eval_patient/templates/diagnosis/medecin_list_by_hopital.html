@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .medecins-container {
+    padding: 20px;
+}
+
+.medecins-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.medecin-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.medecin-card h3 {
+    margin-top: 0;
+}
+
+.medecin-card p {
+    font-size: 14px;
+    color: #555;
+}
+.success-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 30px;
+    }
+
+    .back-link {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+    <div class="medecins-container">
+        <h2>Liste des Médecins de l'Hôpital: {{ hopital.name }}</h2>
+
+        <a href="{% url 'hopital_dashboard' %}" class="back-link">Retour tableau de bord</a><hr>
+        
+        {% if medecins %}
+            <div class="medecins-list">
+                {% for medecin in medecins %}
+                    <div class="medecin-card">
+                        <h3>{{ medecin.name }}</h3>
+                        <p>Spécialité: {{ medecin.specialite }}</p>
+                        <p>Matricule: {{ medecin.matricule }}</p>
+                        <p>Contact: {{ medecin.emergency_contact }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucun médecin trouvé pour cet hôpital.</p>
+        {% endif %}
+    </div>
+{% endblock %}

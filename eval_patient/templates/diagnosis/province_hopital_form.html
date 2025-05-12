@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Choisissez votre province et hôpital</h1>
+    <form method="POST" id="provinceHopitalForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="province">Province</label>
+            {{ form.province }}
+        </div>
+        <div class="form-group">
+            <label for="hopital">Hôpital</label>
+            {{ form.hopital }}
+        </div>
+        <div class="form-group">
+            <label for="matricule">Matricule</label>
+            {{ form.matricule }}
+        </div>
+        <button type="submit">Soumettre</button>
+    </form>
+
+    <!-- <div id="messages">
+        {% for message in messages %}
+            <p class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+        {% endfor %}
+    </div> -->
+</div>
+
+<script>
+    function fetchHopitals() {
+        const provinceId = document.querySelector('select[name="province"]').value;
+        const hopitalSelect = document.getElementById('hopital-select');
+
+        fetch(`/fetch-hopitals/?province_id=${provinceId}`)
+            .then(response => response.json())
+            .then(data => {
+                hopitalSelect.innerHTML = '';
+                data.forEach(hopital => {
+                    const option = document.createElement('option');
+                    option.value = hopital.id;
+                    option.textContent = hopital.name;
+                    hopitalSelect.appendChild(option);
+                });
+            });
+    }
+
+    const form = document.getElementById('provinceHopitalForm');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.body.innerHTML = html;
+        });
+    });
+</script>
+
+<style>
+    /* Style spécifique à cette page */
+    .form-container {
+        background: #ffffff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #333;
+    }
+
+    select, input, button {
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        background: #f9f9f9;
+        width: 100%; /* Garantir que tous les champs sont à largeur 100% */
+        box-sizing: border-box; /* Prendre en compte padding et bordure dans la largeur totale */
+        transition: border-color 0.3s ease;
+    }
+
+    select:focus, input:focus, button:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: 600;
+        padding: 1rem;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #messages {
+        margin-top: 1.5rem;
+    }
+
+    #messages p {
+        font-size: 1rem;
+        padding: 0.8rem;
+        border-radius: 8px;
+        color: #fff;
+        margin: 0.5rem 0;
+    }
+
+    #messages p.success {
+        background: #28a745;
+    }
+
+    #messages p.error {
+        background: #dc3545;
+    }
+</style>
+{% endblock %}

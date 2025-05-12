@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block content %}
+<hr>
+<a href="{% url 'hopital_dashboard' %}" class="back-link">Retour tableau de bord</a><hr>
+<div class="form-container">
+    <h1>Enregistrement du medecin</h1>
+    <form method="POST" id="hopitalMedecinForm">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label for="post_nom">Post-Nom</label>
+            {{ form.post_nom }}
+        </div>
+
+        <div class="form-group">
+            <label for="sexe">Sexe</label>
+            {{ form.sexe }}
+        </div>
+
+        <div class="form-group">
+            <label for="specialite">Spécialité</label>
+            {{ form.specialite }}
+        </div>
+
+        <div class="form-group">
+            <label for="emergency_contact">Contact d'urgence</label>
+            {{ form.emergency_contact }}
+        </div>
+
+        <div class="form-group">
+            <label for="province">Province</label>
+            {{ form.province }}
+        </div>
+
+        <div class="form-group">
+            <label for="hopital">Hôpital</label>
+            {{ form.hopital }}
+        </div>
+        
+        <button type="submit">Soumettre</button>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        background: #ffffff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #333;
+    }
+
+    select, input, button {
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        background: #f9f9f9;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+
+    select:focus, input:focus, button:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: 600;
+        padding: 1rem;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+    .success-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 30px;
+    }
+
+    .back-link {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Logiciel de Détection Monkeypox</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f2f7fa, #c9e3f7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .header h2 {
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+        .content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .button:hover {
+            background: #218838;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .container {
+            animation: fadeIn 1.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bienvenue</h1>
+            {% if hopital_name %}
+                <h2>Bienvenue à l'hôpital {{ hopital_name }}</h2>
+            {% endif %}
+        </div>
+        <div class="content">
+            <p>Bienvenue dans le logiciel de détection de Monkeypox, conçu pour simplifier le diagnostic et le suivi des patients.</p>
+            <p>Utilisez le menu ci-dessous pour accéder aux différentes fonctionnalités :</p>
+            <div class="button-container">
+                <a href="/diagnostic" class="button">Commencer un Diagnostic</a>
+                <a href="/patients" class="button">Gérer les Patients</a>
+                <a href="/aide" class="button">Assistance</a>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2024 Logiciel de Détection Monkeypox. Tous droits réservés.
+        </div>
+    </div>
+</body>
+</html>

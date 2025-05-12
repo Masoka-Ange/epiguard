@@ -1,0 +1,152 @@
+{% extends "base_admin.html" %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .section-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .card-body {
+            font-size: 18px;
+        }
+        .conclusion {
+            font-weight: bold;
+            color: #d9534f;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .graph {
+            height: 300px;
+            margin-top: 30px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="section-header">Rapport de Diagnostic des Patients</div>
+
+    <div class="card">
+        <div class="card-header">
+            Statistiques Générales
+        </div>
+        <div class="card-body">
+            <p><strong>Total de patients :</strong> {{ total_patients }}</p>
+            <p><strong>Patients atteints de Monkeypox :</strong> {{ monkeypox_patients }} ({{ monkeypox_percentage|floatformat:2 }}%)</p>
+            <p><strong>Patients non atteints de Monkeypox :</strong> {{ non_monkeypox_patients }} ({{ non_monkeypox_percentage|floatformat:2 }}%)</p>
+        </div>
+    </div>
+
+    <div class="graph">
+        <!-- Graphique des cas de Monkeypox et non Monkeypox -->
+        <canvas id="statusChart"></canvas>
+    </div>
+
+    <div class="conclusion">
+        <p>{{ conclusion }}</p>
+    </div>
+
+    <div class="stats">
+        <span>Monkeypox : {{ monkeypox_patients }} cas</span>
+        <span>Non Monkeypox : {{ non_monkeypox_patients }} cas</span>
+    </div>
+
+    <div class="table-responsive mt-4">
+        <h3>Détails des Patients</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom du Patient</th>
+                    <th>Diagnostic</th>
+                    <th>Fièvre</th>
+                    <th>Mal de Tête</th>
+                    <th>Douleurs Musculaires</th>
+                    <th>Fatigue</th>
+                    <th>Ganglions enflés</th>
+                    <th>Rash Cutané</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in diagnoses %}
+                    <tr>
+                        <td>{{ patient.id }}</td>
+                        <td>{{ patient.patient_name }}</td>
+                        <td>{{ patient.diagnosis_result }}</td>
+                        <td>{% if patient.fever %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if patient.headache %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if patient.muscle_pain %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if patient.fatigue %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if patient.swollen_lymph_nodes %}Oui{% else %}Non{% endif %}</td>
+                        <td>{% if patient.skin_rash %}Oui{% else %}Non{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Graphique pour les cas Monkeypox et Non Monkeypox
+    var ctx = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Monkeypox', 'Non Monkeypox'],
+            datasets: [{
+                label: 'Nombre de cas',
+                data: {{ status_data|safe }},
+                backgroundColor: ['#f39c12', '#3498db'],
+                borderColor: ['#e67e22', '#2980b9'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+{% endblock %}

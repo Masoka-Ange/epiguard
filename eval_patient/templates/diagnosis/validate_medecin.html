@@ -1,0 +1,23 @@
+<form method="POST">
+    {% csrf_token %}
+    
+    <div>
+        <label for="hopital_name">Hôpital :</label>
+        <input type="text" id="hopital_name" name="hopital_name" value="{{ hopital_name }}" readonly>
+    </div>
+    
+    <div>
+        <label for="matricule">Matricule du Médecin :</label>
+        <input type="text" id="matricule" name="matricule" required>
+    </div>
+
+    <button type="submit">Valider</button>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="success-title">Les informations du patient ont été enregistrées avec succès !</h2>
+    <a href="{% url 'hopital_dashboard' %}" class="back-link">Retour tableau de bord</a>
+</div>
+
+<style>
+    .container {
+        background: #ffffff;
+        width: 90%;
+        max-width: 600px;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin: 100px auto;
+        text-align: center;
+    }
+
+    .success-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 30px;
+    }
+
+    .back-link {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

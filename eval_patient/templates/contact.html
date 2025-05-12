@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | EpiGuard{% endblock %}
+
+{% block content %}
+<style>
+    /* General Section Styling */
+    .contact-section {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        padding: 3rem 1.5rem;
+        text-align: center;
+    }
+
+    .contact-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        animation: fadeInDown 1s ease-in-out;
+    }
+
+    .contact-section p {
+        font-size: 1.2rem;
+        color: #34495e;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    /* Contact Information Styling */
+    .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 2rem;
+    }
+
+    .contact-card {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin: 1rem;
+        width: 300px;
+        text-align: left;
+        transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: scale(1.05);
+    }
+
+    .contact-card h3 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+    }
+
+    .contact-card p {
+        font-size: 1rem;
+        color: #34495e;
+        line-height: 1.6;
+    }
+
+    .contact-card a {
+        display: inline-block;
+        margin-top: 1rem;
+        text-decoration: none;
+        color: #3498db;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .contact-card a:hover {
+        color: #2980b9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .contact-card {
+            width: 100%;
+        }
+
+        .contact-section h1 {
+            font-size: 2rem;
+        }
+
+        .contact-section p {
+            font-size: 1rem;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<section class="contact-section">
+    <h1>Contactez-nous</h1>
+    <p>
+        Vous avez des questions ? Vous souhaitez en savoir plus sur PoxCare ou partager vos idées ? 
+        N'hésitez pas à nous contacter via les moyens suivants :
+    </p>
+    <div class="contact-info">
+        <div class="contact-card">
+            <h3>Adresse</h3>
+            <p>
+                PoxCare Headquarters <br>
+                123 Rue de la Santé <br>
+                Kinshasa, RDC
+            </p>
+        </div>
+        <div class="contact-card">
+            <h3>Téléphone</h3>
+            <p>
+                Support Général : <strong>+243 999 888 777</strong><br>
+                Urgences : <strong>+243 888 777 666</strong>
+            </p>
+        </div>
+        <div class="contact-card">
+            <h3>Email</h3>
+            <p>
+                Assistance : <a href="mailto:support@poxcare.com">support@poxcare.com</a><br>
+                Partenariats : <a href="mailto:partnerships@poxcare.com">partnerships@poxcare.com</a>
+            </p>
+        </div>
+        <div class="contact-card">
+            <h3>Horaires</h3>
+            <p>
+                Lundi - Vendredi : 08h00 - 18h00<br>
+                Samedi : 09h00 - 13h00<br>
+                Dimanche : Fermé
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

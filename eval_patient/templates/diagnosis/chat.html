@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .chat-container {
+        width: 100%;
+        max-width: 700px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+    .chat-header {
+        background-color: #28a745;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px 0;
+        border-radius: 8px;
+        font-size: 1.5rem;
+    }
+    .chat-body {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    .question label {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+    .question input[type="radio"] {
+        margin-right: 10px;
+    }
+    input[type="text"], input[type="file"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    button, .buttons-container a {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px 5px 0 0;
+    }
+    button:hover, .buttons-container a:hover {
+        background-color: #218838;
+    }
+    .view-details {
+        background-color: #007bff;
+    }
+    .view-details:hover {
+        background-color: #0056b3;
+    }
+    .treatment-plan {
+        background-color: #ffc107;
+        color: black;
+    }
+    .treatment-plan:hover {
+        background-color: #e0a800;
+    }
+    .report-container {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .report-header {
+        background-color: #007bff;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px;
+    }
+    .report-content {
+        padding: 10px;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    .report-content img {
+        display: block;
+        max-width: 100%;
+        margin: 20px auto;
+        border: 4px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .conclusion {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #ffeb3b;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <h3>Diagnostic Monkeypox</h3>
+    </div>
+    <div class="chat-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="patient_name" placeholder="Votre nom" required>
+            <!-- Questions -->
+            <div class="question"><label>Éruption cutanée ?</label><input type="radio" name="skin_rash" value="yes" required> Oui<input type="radio" name="skin_rash" value="no" required> Non</div>
+            <div class="question"><label>Fièvre ?</label><input type="radio" name="fever" value="yes" required> Oui<input type="radio" name="fever" value="no" required> Non</div>
+            <div class="question"><label>Ganglions enflés ?</label><input type="radio" name="swollen_lymph_nodes" value="yes" required> Oui<input type="radio" name="swollen_lymph_nodes" value="no" required> Non</div>
+            <div class="question"><label>Douleurs musculaires ?</label><input type="radio" name="muscle_pain" value="yes" required> Oui<input type="radio" name="muscle_pain" value="no" required> Non</div>
+            <div class="question"><label>Maux de tête ?</label><input type="radio" name="headache" value="yes" required> Oui<input type="radio" name="headache" value="no" required> Non</div>
+            <div class="question"><label>Fatigue ?</label><input type="radio" name="fatigue" value="yes" required> Oui<input type="radio" name="fatigue" value="no" required> Non</div>
+            <div class="question"><label>Chargez la photo du patient </label><input type="file" name="image"></div>
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
+    {% if report_data %}
+    <div class="report-container">
+        <div class="report-header">Rapport de Diagnostic</div>
+        <div class="report-content">
+            <p><strong>Nom :</strong> {{ report_data.patient_name }}</p>
+            <p><strong>Fièvre :</strong> {{ report_data.fever }}</p>
+            <p><strong>Maux de tête :</strong> {{ report_data.headache }}</p>
+            <p><strong>Douleurs musculaires :</strong> {{ report_data.muscle_pain }}</p>
+            <p><strong>Fatigue :</strong> {{ report_data.fatigue }}</p>
+            <p><strong>Ganglions enflés :</strong> {{ report_data.swollen_lymph_nodes }}</p>
+            <p><strong>Éruption cutanée :</strong> {{ report_data.skin_rash }}</p>
+            <p><strong>Résultat :</strong> {{ report_data.diagnosis_result }}</p>
+            {% if image_url %}
+            <img src="{{ image_url }}" alt="Image de la peau">
+            {% endif %}
+        </div>
+    </div>
+    <div class="buttons-container">
+        {% if show_button %}
+        <a href="{% url 'add_patient_details' report_data.diagnosis_id %}" class="view-details">Voir les détails des soins</a>
+        {% endif %}
+        {% if treatment_button %}
+        <a href="{% url 'add_patient_traitement' report_data.diagnosis_id %}" class="treatment-plan">Plan de traitement</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+</body>
+{% endblock %}
+

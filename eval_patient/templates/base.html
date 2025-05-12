@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PoxCare{% endblock %}</title>
+    <style>
+        /* Styles partagés pour l'ensemble du site */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
+        .navbar {
+            background: #00796b;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar .logo img {
+            width: 30px;
+            height: 30px;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #ff7043;
+        }
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: #e0f2f1;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #00796b;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            color: #555;
+        }
+        .hero .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #00796b;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .hero .cta-button:hover {
+            background: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://via.placeholder.com/30?text=+" alt="EpidiaCare Icon"> PoxCare
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Accueil</a></li>
+            <li><a href="{% url 'province_hopital_form' %}">Hospital</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}
+        <section class="hero">
+            <h1>Bienvenue sur EpiGuard</h1>
+            <p>Une application dédiée à l'identification et à la prévention des épidémies comme le Monkeypox.</p>
+            <a href="#" class="cta-button">En savoir plus</a>
+        </section>
+        {% endblock %}
+    </main>
+</body>
+</html>

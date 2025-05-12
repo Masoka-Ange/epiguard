@@ -1,0 +1,35 @@
+<!-- <h1>Symptômes positifs pour {{ patient.nom }}</h1>
+
+    <h2>Tableau des symptômes et signes majeurs détectés</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Maladie</th>
+                <th>Signes majeurs du patient</th>
+                <th>Symptômes détectés</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for maladie, symptomes_detectes in symptomes_detectes_par_maladie.items %}
+                <tr>
+                    <td>{{ maladie }}</td>
+                    <td>
+                        <ul>
+                            {% for symptome in symptomes_positifs %}
+                                {% if symptome.symptome_nom in symptomes_detectes %}
+                                    <li>{{ symptome.symptome_nom }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for symptome in symptomes_detectes %}
+                                <li>{{ symptome }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> -->

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 250px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #007bff;
+        }
+
+        .card button {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .card button:hover {
+            background-color: #0056b3;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bienvenue sur le Tableau de Bord de l'hopital {{hopital.name}}</h1>
+
+        <div class="dashboard">
+            <!-- Card 1: Formulaire des Médecins -->
+            <div class="card">
+                <h2>Formulaire des Patients</h2>
+                <p>Affichez le formulaire d'evaluation des patients.</p>
+                <a href="{% url 'select_medecin' %}">
+                    <button>Afficher le formulaire</button>
+                </a>
+            </div>
+
+            <!-- Card 3: Historique des Rendez-vous -->
+            <div class="card">
+                <h2>Formulaire des Médecins</h2>
+                <p>Affichez et gérez les formulaires des médecins.</p>
+                <a href="{% url 'add_medecin' %}">
+                    <button>Voir l'historique</button>
+                </a>
+            </div>
+
+            <!-- Card 4: Statistiques -->
+            <div class="card">
+                <h2>Medecins enregistrés pour cet hopital</h2>
+                <p>Visualisez les informations sur les médecins.</p>
+                {% if hopital.id %}
+                    <a href="{% url 'medecin_list_by_hopital' hopital_id=hopital.id %}">
+                        <button>Voir l'historique</button>
+                    </a>
+                {% else %}
+                    <p>Aucun hôpital trouvé. Veuillez vérifier l'hôpital associé.</p>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 {{ hopital_name }}. Tous droits réservés.
+    </footer>
+
+</body>
+{% endblock %}

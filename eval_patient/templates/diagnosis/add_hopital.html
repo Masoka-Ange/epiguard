@@ -1,0 +1,195 @@
+{% extends "base_admin.html" %}
+
+{% block content %}
+    <style>
+        /* Styles globaux (identiques à ceux que vous avez déjà définis) */
+        .form-container {
+            background: #fff;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin: 50px auto 0; /* Ajouté margin-top: 50px; pour descendre un peu le formulaire */
+        }
+
+        .hospital-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hospital-form .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .hospital-form label {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            width: 100%; /* Les labels prennent toute la largeur disponible */
+            margin-bottom: 8px; /* Ajout d'un petit espace entre le label et le champ */
+        }
+
+        .hospital-form input[type="text"],
+        .hospital-form textarea,
+        .hospital-form select,
+        .hospital-form input[type="file"] {
+            width: 90%; /* Augmenter la largeur des champs à 90% de la largeur du conteneur */
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .hospital-form input:focus,
+        .hospital-form textarea:focus,
+        .hospital-form select:focus {
+            border-color: #4caf50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .btn-submit {
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #388e3c;
+            box-shadow: 0 5px 15px rgba(56, 142, 60, 0.3);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 15px;
+            color: #4caf50;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            text-decoration: underline;
+            color: #388e3c;
+        }
+
+        .table-container {
+            margin-top: 40px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    </style>
+
+    <div class="form-container">
+        <h1>Ajouter un Hôpital</h1>
+        <form method="post" enctype="multipart/form-data" class="hospital-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Nom:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_address">Adresse:</label>
+                {{ form.address }}
+            </div>
+            <div class="form-group">
+                <label for="id_emergency_contact">Contact d'urgence:</label>
+                {{ form.emergency_contact }}
+            </div>
+            <div class="form-group">
+                <label for="id_province">Province:</label>
+                {{ form.province }}
+            </div>
+            <div class="form-group">
+                <label for="id_photo">Photo:</label>
+                {{ form.photo }}
+            </div>
+            <button type="submit" class="btn-submit">Enregistrer</button>
+        </form>
+        <a href="{% url 'province_list' %}" class="btn-back">← Retour</a>
+    </div>
+
+    <!-- Table des hôpitaux enregistrés -->
+    <div class="table-container">
+        <h2>Liste des Hôpitaux</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Matricule</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Contact d'urgence</th>
+                    <th>Province</th>
+                    <th>Photo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hopital in hopitaux %}
+                <tr>
+                    <td>{{ hopital.matricule}}</td>
+                    <td>{{ hopital.name }}</td>
+                    <td>{{ hopital.address }}</td>
+                    <td>{{ hopital.emergency_contact }}</td>
+                    <td>{{ hopital.province.name }}</td>
+                    <td>
+                        {% if hopital.photo %}
+                            <img src="{{ hopital.photo.url }}" alt="{{ hopital.name }}" style="width: 100px; height: auto;">
+                        {% else %}
+                            <span>Aucune photo</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Aucun hôpital enregistré.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector(".hospital-form");
+            form.addEventListener("submit", (event) => {
+                if (!confirm("Êtes-vous sûr de vouloir enregistrer cet hôpital ?")) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+{% endblock %}

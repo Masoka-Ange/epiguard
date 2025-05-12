@@ -1,0 +1,119 @@
+{% block content %}
+<style>
+    /* General styling for the page */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f5;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 30px;
+        font-size: 32px;
+    }
+
+    /* Styling for the graph section */
+    .graph-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .graph-container img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .description {
+        font-size: 18px;
+        text-align: center;
+        margin-top: 15px;
+        color: #7f8c8d;
+    }
+
+    /* Styling for decision block */
+    .decision-block {
+        background: #ecf0f1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .decision-text {
+        font-size: 20px;
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .decision-positive {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+
+    /* Card and layout for hospital details */
+    .province-container, .hopital-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 50px;
+    }
+
+    .province-card, .hopital-card {
+        background: #ffffff;
+        border: 2px solid #ddd;
+        padding: 20px;
+        margin: 10px;
+        width: 250px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+    }
+
+    .province-card:hover, .hopital-card:hover {
+        transform: scale(1.05);
+    }
+
+    .province-card a, .hopital-card a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .province-card h2, .hopital-card h3 {
+        margin-top: 0;
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+</style>
+
+<h1>Prévisions pour l'Hôpital: {{ hopital.name }}</h1>
+
+<div class="graph-container">
+    <!-- Display multiple curves of predictions -->
+    <img src="data:image/png;base64,{{ image_data }}" alt="Prévision des patients">
+
+    <div class="description">
+        <p>La courbe ci-dessus montre les prédictions des patients atteints de Monkeypox au fil du temps. Plusieurs courbes sont présentes pour illustrer les tendances possibles selon les scénarios différents.</p>
+        <p>Nous pouvons voir si la maladie est en tendance décroissante ou si elle continue de se propager.</p>
+    </div>
+</div>
+
+<!-- Decision based on data -->
+<div class="decision-block">
+    <p class="decision-text">Décision basée sur les données:</p>
+    <p class="decision-positive">La tendance montre une diminution des cas. Nous sommes sur la bonne voie pour la fin de la pandémie.</p>
+    <p class="decision-text">Cependant, une surveillance continue est nécessaire pour éviter une résurgence.</p>
+</div>
+
+{% endblock %}

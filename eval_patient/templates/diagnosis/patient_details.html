@@ -1,0 +1,96 @@
+{% extends "base_admin.html" %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: #eef2f7;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2.5rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        .container {
+            margin: 40px auto;
+            width: 90%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        thead {
+            background: #4a90e2;
+            color: white;
+            font-size: 1rem;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        tr:nth-child(even) {
+            background: #f7f9fc;
+        }
+        tr:hover {
+            background: #dbe9f6;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
+        .no-data {
+            color: #888;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Détails des Patients</h1>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Postnom</th>
+                    <th>Sexe</th>
+                    <th>Groupe Sanguin</th>
+                    <th>Date de Vaccination</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in patient_details %}
+                <tr>
+                    <td>{{ detail.first_name }}</td>
+                    <td>{{ detail.post_name }}</td>
+                    <td>{{ detail.sex }}</td>
+                    <td>{{ detail.blood_group }}</td>
+                    <td>{{ detail.vaccination_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="no-data">Aucun détail disponible.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll("tbody tr");
+            rows.forEach((row) => {
+                row.addEventListener("click", () => {
+                    alert(`Vous avez cliqué sur: ${row.children[0].textContent}`);
+                });
+            });
+        });
+    </script>
+</body>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Provinces</title>
+</head>
+<body>
+    <h1>Liste des Provinces</h1>
+    <ul>
+        {% for medecin in medecin %}
+        <li>{{ medecin.name }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_province' %}">Ajouter une Province</a>
+    <a href="{% url 'add_hopital' %}">Ajouter un Hôpital</a>
+    <a href="{% url 'add_medecin' %}">Ajouter un Médecin</a>
+</body>
+</html>

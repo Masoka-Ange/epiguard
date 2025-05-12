@@ -1,0 +1,208 @@
+{% extends "base_admin.html" %}
+
+{% block title %}maladie_detectee_list | EpiGuard{% endblock %}
+
+{% block content %}
+    <style>
+        /* Style général */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #ffffff; /* Fond blanc */
+            color: #004080; /* Texte en bleu */
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        /* Conteneur */
+        .container {
+            width: 95%;
+            max-width: 2600px; /* Agrandir la largeur */
+            margin: auto;
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 18px;
+            border-bottom: 2px solid #004080;
+        }
+
+        th {
+            background: #004080; /* Bleu foncé */
+            color: white;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            background: rgba(0, 64, 128, 0.1); /* Bleu clair transparent */
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: rgba(0, 64, 128, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Bouton de suppression */
+        .btn {
+            background: #ff4d4d;
+            padding: 10px 15px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #cc0000;
+        }
+
+        /* Animation fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            th, td {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            .btn {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .btn {
+                font-size: 0.8rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Liste des Maladies Détectées</h1>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Maladie</th>
+                    <th>Signes Majeurs</th>
+                    <th>Contexte Épidémiologique</th>
+                    <th>Examens Clés</th>
+                    <th>Date de Détection</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="maladieTable">
+                {% for m in maladie %}
+                <tr class="fade-in" id="row-{{ m.id }}">
+                    <td>{{ m.patient.nom }}</td>
+                    <td>{{ m.maladie }}</td>
+                    <td>{{ m.signes_majeurs }}</td>
+                    <td>{{ m.contexte_epidemiologique }}</td>
+                    <td>{{ m.examens_cles }}</td>
+                    <td>{{ m.date_detection|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <button class="btn" onclick="supprimerLigne({{ m.id }})">🗑 Supprimer</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align:center; font-size:1.2rem; color: #ff4d4d;">
+                        Aucune maladie détectée
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function supprimerLigne(maladieId) {
+            if (!confirm("Voulez-vous vraiment supprimer cette maladie ?")) return;
+
+            fetch(`/maladies/supprimer/${maladieId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCSRFToken(),
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const row = document.getElementById(`row-${maladieId}`);
+                    row.style.opacity = "0";
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    alert("Erreur lors de la suppression !");
+                }
+            })
+            .catch(error => console.error("Erreur :", error));
+        }
+
+        function getCSRFToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+    </script>
+
+    <form method="post" style="display: none;">
+        {% csrf_token %}
+    </form>
+
+</body>
+{% endblock %}

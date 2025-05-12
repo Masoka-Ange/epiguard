@@ -1,0 +1,12 @@
+<form method="POST">
+    {% csrf_token %}
+    <label for="hopital">Choisissez un hôpital :</label>
+    <select name="hopital" id="hopital">
+        {% for hopital in hopitaux %}
+            <option value="{{ hopital.id }}">{{ hopital.name }}</option>
+        {% endfor %}
+    </select>
+    <label for="matricule">Matricule :</label>
+    <input type="text" name="matricule" id="matricule" required>
+    <button type="submit">Valider</button>
+</form>
