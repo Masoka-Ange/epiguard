@@ -10,7 +10,7 @@
             padding: 0;
         }
 
-        .container {
+        .container-fluid {
             margin-top: 60px;
         }
 
@@ -117,19 +117,45 @@
         .text-center {
             text-align: center;
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 20px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-control {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .btn-primary {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .table th, .table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
     </style>
 
-    <div class="container">
+    <div class="container-fluid px-3 px-md-5">
         <div class="form-section">
             <h2>Ajouter une Différenciation des Maladies</h2>
             <form method="POST">
                 {% csrf_token %}
-                
+
                 <div class="form-group">
                     <label for="maladie">Maladie</label>
                     <input type="text" name="maladie" class="form-control" id="maladie" value="{{ form.maladie.value }}">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="signes_majeurs">Signes Majeurs</label>
                     <input type="text" name="signes_majeurs" class="form-control" id="signes_majeurs" value="{{ form.signes_majeurs.value }}">
@@ -151,34 +177,35 @@
 
         <div class="table-section">
             <h2 class="text-center">Liste des Maladies et Détails</h2>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Maladie</th>
-                        <th>Signes Majeurs</th>
-                        <th>Contexte Épidémiologique</th>
-                        <th>Examens Clés</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for maladie in maladies %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ maladie.maladie }}</td>
-                            <td>{{ maladie.signes_majeurs }}</td>
-                            <td>{{ maladie.contexte_epidemiologique }}</td>
-                            <td>{{ maladie.examens_cles }}</td>
+                            <th>Maladie</th>
+                            <th>Signes Majeurs</th>
+                            <th>Contexte Épidémiologique</th>
+                            <th>Examens Clés</th>
                         </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-center">Aucune donnée disponible.</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for maladie in maladies %}
+                            <tr>
+                                <td>{{ maladie.maladie }}</td>
+                                <td>{{ maladie.signes_majeurs }}</td>
+                                <td>{{ maladie.contexte_epidemiologique }}</td>
+                                <td>{{ maladie.examens_cles }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">Aucune donnée disponible.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
 {% endblock %}
