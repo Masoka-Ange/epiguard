@@ -1,123 +1,155 @@
 {% extends "base_admin.html" %}
 
 {% block content %}
-    <style>
-        body {
-            background-color: #f4f7fc;
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: #ffffff;
+        color: #004080;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 100%;
+        min-width: 900px; /* pour éviter que le tableau casse sur petits écrans */
+        border-collapse: collapse;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 16px;
+        border-bottom: 2px solid #004080;
+        text-align: center;
+    }
+
+    th {
+        background: #004080;
+        color: white;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+    }
+
+    td {
+        background: rgba(0, 64, 128, 0.05);
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background: rgba(0, 64, 128, 0.15);
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn {
+        background: #ff4d4d;
+        padding: 8px 12px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: 0.3s;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+    }
+
+    .btn:hover {
+        background: #cc0000;
+    }
+
+    /* Animation fade-in */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(15px);
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        th, td {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.6rem;
         }
 
         .container {
-            margin-top: 60px;
+            padding: 10px;
         }
 
-        .form-section {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+        th, td {
+            padding: 10px;
+            font-size: 0.9rem;
         }
 
-        .form-section h2 {
-            text-align: center;
-            color: #007bff;
-            font-size: 26px;
-            margin-bottom: 20px;
+        .btn {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        table {
+            min-width: 100%;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        h1 {
+            font-size: 1.4rem;
         }
 
-        .form-group label {
-            font-size: 16px;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 8px;
-            display: block;
+        th, td {
+            font-size: 0.85rem;
         }
 
-        .form-control {
-            border-radius: 10px;
-            padding: 18px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            background-color: #f8f9fa;
-            color: #495057;
-            width: 100%;
+        .btn {
+            font-size: 0.75rem;
         }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            padding: 15px;
-            font-size: 18px;
-            border-radius: 8px;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .table-section {
-            margin-top: 50px;
-        }
-
-        .table {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            text-align: center;
-            vertical-align: middle;
-            padding: 15px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-        }
-
-        .table th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .table-striped tbody tr:nth-child(odd) {
-            background-color: #f2f8fc;
-        }
-
-        .table-striped tbody tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-
-        .table td {
-            color: #495057;
-        }
-
-        .table td[colspan="4"] {
-            color: #999;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-    </style>
+    }
+</style>
 
     <div class="container">
         <div class="form-section">

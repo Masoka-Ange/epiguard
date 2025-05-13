@@ -3,231 +3,182 @@
 {% block title %}maladie_detectee_list | EpiGuard{% endblock %}
 
 {% block content %}
-    <style>
+<style>
     body {
         font-family: 'Arial', sans-serif;
         background: #ffffff;
         color: #004080;
         margin: 0;
-        padding: 20px;
+        padding: 10px;
     }
 
     h1 {
         text-align: center;
-        font-size: 2.5rem;
+        font-size: 2rem;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: bold;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .container {
         width: 100%;
-        max-width: 100%;
         overflow-x: auto;
         background: #f9f9f9;
-        padding: 20px;
+        padding: 10px;
         border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     }
 
     table {
         width: 100%;
-        min-width: 900px; /* pour éviter que le tableau casse sur petits écrans */
         border-collapse: collapse;
         background: #ffffff;
         border-radius: 12px;
         overflow: hidden;
+        font-size: 0.85rem;
     }
 
     th, td {
-        padding: 16px;
-        border-bottom: 2px solid #004080;
+        padding: 10px;
+        border-bottom: 1px solid #004080;
         text-align: center;
     }
 
     th {
         background: #004080;
         color: white;
-        font-size: 1.1rem;
-        text-transform: uppercase;
+        font-size: 0.9rem;
     }
 
     td {
         background: rgba(0, 64, 128, 0.05);
-        font-weight: bold;
+        font-weight: normal;
     }
 
     tr:hover {
-        background: rgba(0, 64, 128, 0.15);
+        background: rgba(0, 64, 128, 0.1);
         transition: 0.3s ease-in-out;
     }
 
     .btn {
         background: #ff4d4d;
-        padding: 8px 12px;
+        padding: 6px 10px;
         color: white;
-        font-weight: bold;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: 0.3s;
+        font-size: 0.75rem;
+        border-radius: 6px;
         border: none;
         cursor: pointer;
-        font-size: 0.95rem;
     }
 
     .btn:hover {
         background: #cc0000;
     }
 
-    /* Animation fade-in */
-    .fade-in {
-        opacity: 0;
-        transform: translateY(15px);
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
     /* Responsive */
-    @media (max-width: 992px) {
-        h1 {
-            font-size: 2rem;
-        }
-
-        th, td {
-            padding: 12px;
-            font-size: 0.95rem;
-        }
-
-        .btn {
-            font-size: 0.85rem;
-        }
-    }
-
     @media (max-width: 768px) {
         h1 {
-            font-size: 1.6rem;
-        }
-
-        .container {
-            padding: 10px;
+            font-size: 1.5rem;
         }
 
         th, td {
-            padding: 10px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            padding: 8px;
         }
 
         .btn {
-            font-size: 0.8rem;
-            padding: 6px 10px;
+            font-size: 0.7rem;
+            padding: 5px 8px;
         }
     }
 
-    @media (max-width: 576px) {
-        table {
-            min-width: 100%;
-        }
-
+    @media (max-width: 480px) {
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
-        th, td {
-            font-size: 0.85rem;
-        }
-
-        .btn {
+        table {
             font-size: 0.75rem;
         }
+
+        th, td {
+            padding: 6px;
+        }
+
+        .btn {
+            font-size: 0.65rem;
+            padding: 4px 6px;
+        }
+    }
+</style>
+
+<h1>Liste des Maladies Détectées</h1>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Maladie</th>
+                <th>Signes Majeurs</th>
+                <th>Contexte</th>
+                <th>Examens</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="maladieTable">
+            {% for m in maladie %}
+            <tr id="row-{{ m.id }}">
+                <td>{{ m.patient.nom }}</td>
+                <td>{{ m.maladie }}</td>
+                <td>{{ m.signes_majeurs }}</td>
+                <td>{{ m.contexte_epidemiologique }}</td>
+                <td>{{ m.examens_cles }}</td>
+                <td>{{ m.date_detection|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <button class="btn" onclick="supprimerLigne({{ m.id }})">🗑 Supprimer</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align:center; color:#ff4d4d;">
+                    Aucune maladie détectée
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function supprimerLigne(maladieId) {
+        if (!confirm("Voulez-vous vraiment supprimer cette maladie ?")) return;
+
+        fetch(`/maladies/supprimer/${maladieId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCSRFToken(),
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const row = document.getElementById(`row-${maladieId}`);
+                row.style.opacity = "0";
+                setTimeout(() => row.remove(), 300);
+            } else {
+                alert("Erreur lors de la suppression !");
+            }
+        })
+        .catch(error => console.error("Erreur :", error));
     }
 
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+</script>
 
-    </style>
-</head>
-<body>
-
-    <h1>Liste des Maladies Détectées</h1>
-
-    <div class="container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Patient</th>
-                    <th>Maladie</th>
-                    <th>Signes Majeurs</th>
-                    <th>Contexte Épidémiologique</th>
-                    <th>Examens Clés</th>
-                    <th>Date de Détection</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="maladieTable">
-                {% for m in maladie %}
-                <tr class="fade-in" id="row-{{ m.id }}">
-                    <td>{{ m.patient.nom }}</td>
-                    <td>{{ m.maladie }}</td>
-                    <td>{{ m.signes_majeurs }}</td>
-                    <td>{{ m.contexte_epidemiologique }}</td>
-                    <td>{{ m.examens_cles }}</td>
-                    <td>{{ m.date_detection|date:"d/m/Y H:i" }}</td>
-                    <td>
-                        <button class="btn" onclick="supprimerLigne({{ m.id }})">🗑 Supprimer</button>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7" style="text-align:center; font-size:1.2rem; color: #ff4d4d;">
-                        Aucune maladie détectée
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        function supprimerLigne(maladieId) {
-            if (!confirm("Voulez-vous vraiment supprimer cette maladie ?")) return;
-
-            fetch(`/maladies/supprimer/${maladieId}/`, {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCSRFToken(),
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const row = document.getElementById(`row-${maladieId}`);
-                    row.style.opacity = "0";
-                    setTimeout(() => row.remove(), 300);
-                } else {
-                    alert("Erreur lors de la suppression !");
-                }
-            })
-            .catch(error => console.error("Erreur :", error));
-        }
-
-        function getCSRFToken() {
-            return document.querySelector('[name=csrfmiddlewaretoken]').value;
-        }
-    </script>
-
-    <form method="post" style="display: none;">
-        {% csrf_token %}
-    </form>
-
-</body>
+<form method="post" style="display: none;">
+    {% csrf_token %}
+</form>
 {% endblock %}
